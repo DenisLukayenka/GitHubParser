@@ -12,7 +12,7 @@ import retrofit2.http.Path
 interface GithubApiService {
 
     @GET("/users/{authorName}/repos")
-    fun search(@Path("authorName") authorName: String?): Call<List<GithubRepository>>
+    fun search(@Path("authorName") authorName: String?): Call<List<ReposResponseModel>>
 
     companion object Factory {
         fun create(): GithubApiService {

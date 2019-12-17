@@ -1,7 +1,11 @@
 package com.denis.githubparser
 
+import android.app.Activity
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.IBinder
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -36,6 +40,7 @@ class MainActivity : AppCompatActivity() {
             adapter = RepositoryListAdapter(this@MainActivity, repos)
             recyclerView.adapter = adapter
         })
+        viewModel.loadAllRepositoriesFromDb()
 
         binding.searchButton.setOnClickListener { searchButtonHandler() }
 
@@ -44,34 +49,20 @@ class MainActivity : AppCompatActivity() {
     private fun searchButtonHandler(){
 
         viewModel.loadRepositories(binding.nameInput.text.toString())
+        hideKeyboard(this)
+    }
 
-        //RepositoryProvider.provideSearchRepository(binding.nameInput.text.toString())
-        //viewModel.insert(GithubRepository("Dzianis2", "4", "url", "c#"))
-        //viewModel.insert(GithubRepository("PPPP2", "5", "url", "c#"))
+    fun hideKeyboard(activity: Activity?){
+        if (activity == null) return
+        val view = activity.currentFocus
+        if (view != null) {
+            hideKeyboard(activity, view.windowToken)
+        }
+    }
 
-
-        /*val database = GithubDatabase.getInstance(applicationContext).githubDatabaseDao
-
-        var a = database.getAllRepositories()
-        var b = a.value
-
-        //database.insert(GithubRepository(name = "name", fullName = "fullName"))
-
-        a = database.getAllRepositories()
-        var c = a.value
-
-        var bb = database.get(0)
-        var cc = database.get(1)*/
-
-        /*val repository = RepositoryProvider.provideSearchRepository()
-        repository.searchRepositories()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe ({
-                    result ->
-                Log.d("Result", "There are ${result.size} Java developers in Lagos")
-            }, { error ->
-                error.printStackTrace()
-            })*/
+    private fun hideKeyboard(activity: Activity?, windowToken: IBinder?) {
+        if (activity == null) return
+        val inputManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     }
 }

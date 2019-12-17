@@ -5,21 +5,55 @@ import com.denis.githubparser.db.GithubDatabaseDao
 import com.denis.githubparser.db.models.GithubRepository
 
 class GithubDbRepository(private val dbDao: GithubDatabaseDao){
-    val allRepositories: LiveData<List<GithubRepository>> = dbDao.getAllRepositories()
+    suspend fun insertAll(reps: List<RepositoryModel>){
+        val daoList = castListToDao(reps)
 
-    suspend fun insertAll(reps: List<GithubRepository>){
-        dbDao.insertAll(reps)
+        dbDao.insertAll(daoList)
     }
 
-    suspend fun insert(rep: GithubRepository){
-        dbDao.insert(rep)
+    suspend fun insert(rep: RepositoryModel){
+        dbDao.insert(castElementToDao(rep))
     }
 
-    suspend fun update(rep: GithubRepository){
-        dbDao.update(rep)
+    suspend fun getByAuthor(authorName: String) : List<RepositoryModel>{
+        return castListFromDao(dbDao.getByAuthor(authorName))
     }
 
-    /*fun getByAuthor(authorName: String) : LiveData<List<GithubRepository>>{
-        return dbDao.get(authorName)
-    }*/
+    suspend fun deleteByAuthor(authorName: String){
+        dbDao.deleteByAuthor(authorName)
+    }
+
+    suspend fun getAllRepositories(): List<RepositoryModel>{
+        return castListFromDao(dbDao.getAllRepositories())
+    }
+
+    private fun castListToDao(list: List<RepositoryModel> ): List<GithubRepository>{
+        return list.map { castElementToDao(it) }
+    }
+
+    private fun castElementToDao(model: RepositoryModel): GithubRepository{
+        return GithubRepository(
+            model.id,
+            model.apiId,
+            model.authorName,
+            model.repositoryName,
+            model.repositoryFullName,
+            model.url
+        )
+    }
+
+    private fun castElementFromDao(model: GithubRepository): RepositoryModel{
+        return RepositoryModel(
+            model.id,
+            model.apiId,
+            model.authorName,
+            model.repositoryName,
+            model.repositoryFullName,
+            model.url
+        )
+    }
+
+    private fun castListFromDao(list: List<GithubRepository> ): List<RepositoryModel>{
+        return list.map { castElementFromDao(it) }
+    }
 }

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.denis.githubparser.R
 import com.denis.githubparser.db.models.GithubRepository
 
-class RepositoryListAdapter internal constructor(context: Context, items: List<GithubRepository>)
+class RepositoryListAdapter internal constructor(context: Context, items: List<RepositoryModel>)
     : RecyclerView.Adapter<RepositoryListAdapter.RepositoryViewHolder>(){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -25,7 +25,7 @@ class RepositoryListAdapter internal constructor(context: Context, items: List<G
         holder.repositoryViewItem.text = current.repositoryName
     }
 
-    internal fun setRepositories(repositories: List<GithubRepository>) {
+    internal fun setRepositories(repositories: List<RepositoryModel>) {
         this.repositories = repositories
         notifyDataSetChanged()
     }

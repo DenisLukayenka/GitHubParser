@@ -1,6 +1,5 @@
 package com.denis.githubparser.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.denis.githubparser.db.models.GithubRepository
 
@@ -12,18 +11,15 @@ interface GithubDatabaseDao{
     @Insert
     suspend fun insertAll(repositories: List<GithubRepository>)
 
-    @Update
-    suspend fun update(repository: GithubRepository)
-
-    /*@Query("SELECT * from repositories WHERE authorName = :authorName")
-    fun get(authorName: String): LiveData<List<GithubRepository>>
-
-    @Query("SELECT * from repositories WHERE authorName = :authorName AND repository_language = :language")
-    fun getByAuthorAndLanguage(authorName: String, language: String): LiveData<List<GithubRepository>>*/
+    @Query("SELECT * from repositories WHERE author_name = :authorName")
+    suspend fun getByAuthor(authorName: String): List<GithubRepository>
 
     @Query("DELETE FROM repositories")
     suspend fun clear()
 
+    @Query("DELETE FROM repositories WHERE author_name = :authorName")
+    suspend fun deleteByAuthor(authorName: String)
+
     @Query("SELECT * FROM repositories")
-    fun getAllRepositories(): LiveData<List<GithubRepository>>
+    suspend fun getAllRepositories(): List<GithubRepository>
 }
