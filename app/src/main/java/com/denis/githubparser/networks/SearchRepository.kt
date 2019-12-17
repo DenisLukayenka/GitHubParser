@@ -1,9 +1,10 @@
 package com.denis.githubparser.networks
 
-import io.reactivex.Observable
+import com.denis.githubparser.db.models.GithubRepository
+import retrofit2.Call
 
 class SearchRepository(private val apiService: GithubApiService) {
-    fun searchRepositories(): Observable<List<RepositoryModel>> {
-        return apiService.search()
+    fun searchRepositories(authorName: String): Call<List<GithubRepository>> {
+        return apiService.search(authorName)
     }
 }

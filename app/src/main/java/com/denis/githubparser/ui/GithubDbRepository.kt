@@ -7,6 +7,10 @@ import com.denis.githubparser.db.models.GithubRepository
 class GithubDbRepository(private val dbDao: GithubDatabaseDao){
     val allRepositories: LiveData<List<GithubRepository>> = dbDao.getAllRepositories()
 
+    suspend fun insertAll(reps: List<GithubRepository>){
+        dbDao.insertAll(reps)
+    }
+
     suspend fun insert(rep: GithubRepository){
         dbDao.insert(rep)
     }
@@ -14,4 +18,8 @@ class GithubDbRepository(private val dbDao: GithubDatabaseDao){
     suspend fun update(rep: GithubRepository){
         dbDao.update(rep)
     }
+
+    /*fun getByAuthor(authorName: String) : LiveData<List<GithubRepository>>{
+        return dbDao.get(authorName)
+    }*/
 }

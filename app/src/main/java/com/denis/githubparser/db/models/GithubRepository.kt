@@ -3,15 +3,28 @@ package com.denis.githubparser.db.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
+import org.jetbrains.annotations.NotNull
 
 @Entity(tableName = "repositories")
 data class GithubRepository(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0L,
+
+    @NotNull
+    @PrimaryKey
+    @SerializedName("id")
+    val id: Long,
+
+    @ColumnInfo(name = "author_name")
+    var authorName: String,
 
     @ColumnInfo(name = "repository_name")
-    val name: String = "",
+    @SerializedName("name")
+    val repositoryName: String = "",
 
-    @ColumnInfo(name = "repository_full_name")
-    val fullName: String = ""
+    @ColumnInfo(name = "repository_url")
+    @SerializedName("url")
+    val url: String = "",
+
+    @ColumnInfo(name = "repository_language")
+    val language: String = ""
 )

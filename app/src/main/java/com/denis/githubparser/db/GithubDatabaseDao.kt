@@ -9,11 +9,17 @@ interface GithubDatabaseDao{
     @Insert
     suspend fun insert(repository: GithubRepository)
 
+    @Insert
+    suspend fun insertAll(repositories: List<GithubRepository>)
+
     @Update
     suspend fun update(repository: GithubRepository)
 
-    @Query("SELECT * from repositories WHERE id = :key")
-    fun get(key: Long): GithubRepository?
+    /*@Query("SELECT * from repositories WHERE authorName = :authorName")
+    fun get(authorName: String): LiveData<List<GithubRepository>>
+
+    @Query("SELECT * from repositories WHERE authorName = :authorName AND repository_language = :language")
+    fun getByAuthorAndLanguage(authorName: String, language: String): LiveData<List<GithubRepository>>*/
 
     @Query("DELETE FROM repositories")
     suspend fun clear()

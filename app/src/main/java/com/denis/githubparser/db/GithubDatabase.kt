@@ -9,7 +9,7 @@ import com.denis.githubparser.db.models.GithubRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [GithubRepository::class], version = 2, exportSchema = false)
+@Database(entities = [GithubRepository::class], version = 4, exportSchema = false)
 abstract class GithubDatabase : RoomDatabase() {
     abstract fun githubDatabaseDao(): GithubDatabaseDao
 
@@ -29,11 +29,11 @@ abstract class GithubDatabase : RoomDatabase() {
                         githubDao.clear()
 
                         // Add sample words.
-                        var repository = GithubRepository(0, "name1", "fullname1")
+                        /*var repository = GithubRepository(0, "name1", "fullname1")
                         githubDao.insert(repository)
 
                         repository = GithubRepository(0, "name2", "fullname2")
-                        githubDao.insert(repository)
+                        githubDao.insert(repository)*/
                     }
                 }
             }
