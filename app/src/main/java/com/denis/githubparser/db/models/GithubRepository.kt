@@ -25,5 +25,8 @@ data class GithubRepository(
     val repositoryFullName: String = "",
 
     @ColumnInfo(name = "repository_url")
-    val url: String = ""
+    val url: String = "",
+
+    @ColumnInfo(name = "main_language")
+    val language: String? = ""
 )

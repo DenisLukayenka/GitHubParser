@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.denis.githubparser.R
 import com.denis.githubparser.db.models.GithubRepository
+import org.w3c.dom.Text
 
 class RepositoryListAdapter internal constructor(context: Context, items: List<RepositoryModel>)
     : RecyclerView.Adapter<RepositoryListAdapter.RepositoryViewHolder>(){
@@ -23,17 +24,13 @@ class RepositoryListAdapter internal constructor(context: Context, items: List<R
     override fun onBindViewHolder(holder: RepositoryViewHolder, position: Int) {
         val current = repositories[position]
         holder.repositoryViewItem.text = current.repositoryName
-    }
-
-    internal fun setRepositories(repositories: List<RepositoryModel>) {
-        this.repositories = repositories
-        notifyDataSetChanged()
+        holder.repositoryMainLanguage.text = current.language
     }
 
     override fun getItemCount() = repositories.size
 
-
     inner class RepositoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val repositoryViewItem: TextView = itemView.findViewById(R.id.repositoryItem)
+        val repositoryMainLanguage: TextView = itemView.findViewById(R.id.repos_language)
     }
 }

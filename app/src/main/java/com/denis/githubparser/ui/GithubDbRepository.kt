@@ -1,6 +1,5 @@
 package com.denis.githubparser.ui
 
-import androidx.lifecycle.LiveData
 import com.denis.githubparser.db.GithubDatabaseDao
 import com.denis.githubparser.db.models.GithubRepository
 
@@ -38,7 +37,8 @@ class GithubDbRepository(private val dbDao: GithubDatabaseDao){
             model.authorName,
             model.repositoryName,
             model.repositoryFullName,
-            model.url
+            model.url,
+            model.language
         )
     }
 
@@ -49,7 +49,8 @@ class GithubDbRepository(private val dbDao: GithubDatabaseDao){
             model.authorName,
             model.repositoryName,
             model.repositoryFullName,
-            model.url
+            model.url,
+            model.language
         )
     }
 

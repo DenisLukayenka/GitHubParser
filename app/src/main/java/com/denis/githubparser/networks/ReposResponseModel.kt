@@ -13,5 +13,8 @@ data class ReposResponseModel(
     val full_name: String,
 
     @SerializedName("url")
-    val url: String
+    val url: String,
+
+    @SerializedName("language")
+    val language: String? = ""
 )

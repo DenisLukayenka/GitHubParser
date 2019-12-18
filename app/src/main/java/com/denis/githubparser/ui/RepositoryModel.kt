@@ -5,4 +5,5 @@ data class RepositoryModel (val id: Long,
                             val authorName: String,
                             val repositoryName: String,
                             val repositoryFullName: String,
-                            val url: String)
+                            val url: String,
+                            val language: String?)

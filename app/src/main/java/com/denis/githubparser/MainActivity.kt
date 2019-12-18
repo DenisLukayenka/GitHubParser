@@ -32,10 +32,6 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         viewModel = ViewModelProvider(this).get(RepositoryViewModel::class.java)
-        /*viewModel.allRepositories.observe(this, Observer { repos ->
-            repos?.let { adapter.setRepositories(repos) }
-        })*/
-
         viewModel.repositoryList.observe(this, Observer { repos ->
             adapter = RepositoryListAdapter(this@MainActivity, repos)
             recyclerView.adapter = adapter
@@ -43,21 +39,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.loadAllRepositoriesFromDb()
 
         binding.searchButton.setOnClickListener { searchButtonHandler() }
-
     }
 
     private fun searchButtonHandler(){
-
         viewModel.loadRepositories(binding.nameInput.text.toString())
-        hideKeyboard(this)
-    }
-
-    fun hideKeyboard(activity: Activity?){
-        if (activity == null) return
-        val view = activity.currentFocus
-        if (view != null) {
-            hideKeyboard(activity, view.windowToken)
-        }
+        hideKeyboard(this, this.currentFocus!!.windowToken)
     }
 
     private fun hideKeyboard(activity: Activity?, windowToken: IBinder?) {

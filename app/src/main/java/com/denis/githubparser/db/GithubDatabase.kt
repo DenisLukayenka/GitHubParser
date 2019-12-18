@@ -9,7 +9,7 @@ import com.denis.githubparser.db.models.GithubRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [GithubRepository::class], version = 6, exportSchema = false)
+@Database(entities = [GithubRepository::class], version = 8, exportSchema = false)
 abstract class GithubDatabase : RoomDatabase() {
     abstract fun githubDatabaseDao(): GithubDatabaseDao
 
